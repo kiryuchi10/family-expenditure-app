@@ -1,0 +1,163 @@
+Expense Tracker Development Plan
+Project Overview
+A comprehensive expense tracking system that processes bank statements, categorizes transactions, and provides detailed analytics with data visualization capabilities.
+
+Architecture Overview
+Frontend (React)
+File Upload Component: Handle CSV/Excel/TXT files with password protection
+Dashboard: Real-time analytics and spending overview
+Transaction Management: Filter, search, and categorize transactions
+Category Management: Add/edit/delete spending categories
+Data Visualization: Interactive charts and graphs
+Export Functionality: Generate reports in various formats
+Backend (Flask)
+File Processing: Parse and clean bank statement data
+Transaction Categorization: AI-powered expense categorization
+API Integration: Connect with retailer APIs for detailed product info
+Database Management: Store and retrieve transaction data
+Analytics Engine: Generate spending insights and trends
+Export Services: Create Excel/CSV reports
+Database (SQLite → PostgreSQL)
+Normalized Schema: Efficient data storage and retrieval
+Foreign Key Relationships: Maintain data integrity
+Indexing: Optimize query performance
+Backup Strategy: Regular data backups
+Phase 1: Core Development (Weeks 1-4)
+Week 1: Database Setup & Basic Processing
+python
+# Required Functions:
+def setup_database():
+    """Initialize database with all tables"""
+    pass
+
+def process_korean_text(text: str) -> dict:
+    """Parse Korean transaction descriptions"""
+    pass
+
+def categorize_transaction(description: str, amount: float) -> dict:
+    """Categorize transactions based on merchant patterns"""
+    pass
+
+def clean_transaction_data(df: pd.DataFrame) -> pd.DataFrame:
+    """Clean and standardize transaction data"""
+    pass
+Week 2: File Processing & Upload
+python
+# Required Functions:
+def handle_file_upload(file_path: str, password: str) -> pd.DataFrame:
+    """Process uploaded bank statement files"""
+    pass
+
+def validate_file_format(file_path: str) -> bool:
+    """Validate file format and structure"""
+    pass
+
+def extract_transaction_data(df: pd.DataFrame) -> List[dict]:
+    """Extract structured transaction data"""
+    pass
+
+def save_transactions_to_db(transactions: List[dict]) -> int:
+    """Save processed transactions to database"""
+    pass
+Week 3: Basic API Endpoints
+python
+# Required API Endpoints:
+@app.route('/api/upload', methods=['POST'])
+def upload_file():
+    """Handle file upload and processing"""
+    pass
+
+@app.route('/api/transactions', methods=['GET'])
+def get_transactions():
+    """Retrieve transactions with filtering"""
+    pass
+
+@app.route('/api/categories', methods=['GET', 'POST'])
+def manage_categories():
+    """Create and retrieve categories"""
+    pass
+
+@app.route('/api/analytics/spending', methods=['GET'])
+def get_spending_analytics():
+    """Generate spending analytics"""
+    pass
+Week 4: Basic Frontend Integration
+javascript
+// Required React Components:
+function FileUpload({ onFileUpload }) {
+    // Handle file upload with progress
+}
+
+function TransactionList({ transactions, onFilter }) {
+    // Display transactions with filtering
+}
+
+function CategoryManager({ categories, onAddCategory }) {
+    // Manage expense categories
+}
+
+function SpendingChart({ data }) {
+    // Basic pie chart visualization
+}
+Phase 2: Advanced Features (Weeks 5-8)
+Week 5: Enhanced Categorization
+python
+def train_categorization_model(transactions: List[dict]) -> object:
+    """Train ML model for better categorization"""
+    pass
+
+def predict_transaction_category(description: str, amount: float) -> dict:
+    """Use ML model to predict category"""
+    pass
+
+def update_category_mapping(company: str, category: dict) -> bool:
+    """Update category mapping based on user feedback"""
+    pass
+Week 6: API Integrations
+python
+class AmazonAPI:
+    def get_order_details(self, order_id: str) -> dict:
+        """Fetch Amazon order details"""
+        pass
+    
+    def get_product_info(self, product_id: str) -> dict:
+        """Get detailed product information"""
+        pass
+
+class HEBAPI:
+    def get_receipt_details(self, receipt_id: str) -> dict:
+        """Fetch HEB receipt details"""
+        pass
+    
+    def get_product_categories(self, upc: str) -> dict:
+        """Get product category information"""
+        pass
+
+def augment_transaction_data(transaction: dict) -> dict:
+    """Enhance transaction with API data"""
+    pass
+Week 7: Advanced Analytics
+python
+def calculate_spending_trends(user_id: int, period: str) -> dict:
+    """Calculate spending trends over time"""
+    pass
+
+def generate_budget_recommendations(user_id: int) -> List[dict]:
+    """Generate budget recommendations"""
+    pass
+
+def detect_spending_anomalies(transactions: List[dict]) -> List[dict]:
+    """Detect unusual spending patterns"""
+    pass
+
+def create_spending_forecast(historical_data: List[dict]) -> dict:
+    """Forecast future spending"""
+    pass
+Week 8: Advanced Visualizations
+javascript
+// Advanced React Components:
+function SpendingTrendChart({ data, period }) {
+    // Line chart for spending trends
+}
+
+function BudgetTracker({ bu
