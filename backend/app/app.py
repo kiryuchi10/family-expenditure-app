@@ -8,21 +8,45 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
 import os
 import sys
 import json
 from datetime import datetime, timedelta
 import logging
 
+# Load environment variables
+load_dotenv()
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expense_tracker.db'
+
+# Configuration from environment variables
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['REPORTS_FOLDER'] = 'reports'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', 'uploads')
+app.config['REPORTS_FOLDER'] = os.getenv('REPORTS_FOLDER', 'reports')
+app.config['MAX_CONTENT_LENGTH'] = int(os.getenv('MAX_CONTENT_LENGTH', 16 * 1024 * 1024))
+
+# Database configuration
+mysql_user = os.getenv('MYSQL_USER', 'root')
+mysql_password = os.getenv('MYSQL_PASSWORD', '12345')
+mysql_host = os.getenv('MYSQL_HOST', 'localhost')
+mysql_port = os.getenv('MYSQL_PORT', '3306')
+mysql_db = os.getenv('MYSQL_DB', 'family_finance')
+
+# Try MySQL first, fallback to SQLite
+try:
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{mysql_user}:{mysql_password}@{mysql_host}:{mysql_port}/{mysql_db}'
+    print(f"Using MySQL database: {mysql_db}")
+except:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expense_tracker.db'
+    print("Using SQLite database (fallback)")
 
 db = SQLAlchemy(app)
-CORS(app)
+
+# CORS configuration
+cors_origins = os.getenv('CORS_ORIGINS', 'http://localhost:3000').split(',')
+CORS(app, origins=cors_origins)
 
 # Setup logging
 logging.basicConfig(
